@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  customCell.h
 //  templateTableProject
 //
 //  Created by Fabian Buentello on 2/12/15.
@@ -8,8 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
-
+@interface customCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UILabel *cellLabel;
 
 @end
-
