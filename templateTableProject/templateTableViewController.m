@@ -45,6 +45,7 @@
                     cellObject *obj = [[cellObject alloc] initWithUserName:username andFirstName:firstname andLastName:lastname];
                     [weakSelf.tableArray addObject:obj];
                 }
+                
                 [weakSelf.tableView reloadData];
             });
             
