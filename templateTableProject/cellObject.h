@@ -10,9 +10,9 @@
 
 @interface cellObject : NSObject
 
-@property(weak, nonatomic) NSString *username;
-@property(weak, nonatomic) NSString *firstName;
-@property(weak, nonatomic) NSString *lastName;
+@property(strong, nonatomic) NSString *username;
+@property(strong, nonatomic) NSString *firstName;
+@property(strong, nonatomic) NSString *lastName;
 
 
 - (id) initWithUserName:(NSString *)uName andFirstName:(NSString *)fName andLastName:(NSString *)lName;

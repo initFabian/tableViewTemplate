@@ -448,6 +448,7 @@
 				5C27BDDD1A8D510C0060F032 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		5C27BDDE1A8D510C0060F032 /* Build configuration list for PBXNativeTarget "templateTableProjectTests" */ = {
 			isa = XCConfigurationList;
@@ -456,6 +457,7 @@
 				5C27BDE01A8D510C0060F032 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

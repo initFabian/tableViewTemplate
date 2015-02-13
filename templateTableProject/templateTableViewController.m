@@ -26,7 +26,27 @@
     
     mConnect = [[mConnection alloc] init];
     self.tableArray = [[NSMutableArray alloc] init];
+    // Initialize the refresh control.
+    self.refreshControl = [UIRefreshControl new];
+    [self.refreshControl addTarget:self
+                            action:@selector(pulledRefresh)
+                  forControlEvents:UIControlEventValueChanged];
+    [self performSelector:@selector(getTableViewData) withObject:nil afterDelay:1.0];
     [self getTableViewData];
+}
+
+-(void)pulledRefresh {
+    if (self.refreshControl) {
+        
+        NSDateFormatter *formatter = [NSDateFormatter new];
+        [formatter setDateFormat:@"MMM d, h:mm a"];
+        NSString *title = [NSString stringWithFormat:@"Last update: %@", [formatter stringFromDate:[NSDate date]]];
+        NSDictionary *attrsDictionary = [NSDictionary dictionaryWithObject:[UIColor lightGrayColor] forKey:NSForegroundColorAttributeName];
+        NSAttributedString *attributedTitle = [[NSAttributedString alloc] initWithString:title attributes:attrsDictionary];
+        self.refreshControl.attributedTitle = attributedTitle;
+        
+        [self getTableViewData];
+    }
 }
 
 - (void)getTableViewData {
@@ -38,15 +58,19 @@
         if (!error) {
 
             dispatch_async(dispatch_get_main_queue(), ^{
+                NSMutableArray *tempArr = [NSMutableArray new];
+                
                 for (int x = 0; x < response.count; x++) {
                     NSString *username = [[response objectAtIndex:x] objectForKey:@"username"];
                     NSString *firstname = [[response objectAtIndex:x] objectForKey:@"firstname"];
                     NSString *lastname = [[response objectAtIndex:x] objectForKey:@"lastname"];
                     cellObject *obj = [[cellObject alloc] initWithUserName:username andFirstName:firstname andLastName:lastname];
-                    [weakSelf.tableArray addObject:obj];
+                    [tempArr addObject:obj];
                 }
-                
-                [weakSelf.tableView reloadData];
+                weakSelf.tableArray = [NSMutableArray arrayWithArray:tempArr];
+                [weakSelf.refreshControl endRefreshing];
+                // Reload table data
+                [weakSelf.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
             });
             
         } else {
