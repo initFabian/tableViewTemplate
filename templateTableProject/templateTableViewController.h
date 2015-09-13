@@ -10,6 +10,7 @@
 #import "customCell.h"
 #import "mConnection.h"
 #import "cellObject.h"
+#import "UIImageView+WebCache.h"
 
 @interface templateTableViewController : UITableViewController
 @property(strong, nonatomic) NSMutableArray *tableArray;
