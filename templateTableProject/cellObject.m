@@ -9,18 +9,17 @@
 #import "cellObject.h"
 
 @implementation cellObject
-@synthesize username,firstName,lastName;
+@synthesize username,firstName,lastName,imageUrl;
 
-- (id) initWithUserName:(NSString *)uName andFirstName:(NSString *)fName andLastName:(NSString *)lName {
+- (id) initWithUserName:(NSString *)uName andFirstName:(NSString *)fName andLastName:(NSString *)lName andImgURL:(NSString *)imgUrl {
     
     if (self = [self init]) {
         
         self.username = uName;
         self.firstName = fName;
         self.lastName = lName;
+        self.imageUrl = imgUrl;
     }
-    
     return self;
-
 }
 @end

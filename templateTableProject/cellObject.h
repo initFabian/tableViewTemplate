@@ -13,8 +13,9 @@
 @property(strong, nonatomic) NSString *username;
 @property(strong, nonatomic) NSString *firstName;
 @property(strong, nonatomic) NSString *lastName;
+@property(strong, nonatomic) NSString *imageUrl;
 
 
-- (id) initWithUserName:(NSString *)uName andFirstName:(NSString *)fName andLastName:(NSString *)lName;
+- (id) initWithUserName:(NSString *)uName andFirstName:(NSString *)fName andLastName:(NSString *)lName andImgURL:(NSString *)imgUrl;
 
 @end

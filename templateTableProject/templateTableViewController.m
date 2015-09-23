@@ -7,10 +7,10 @@
 //
 
 #import "templateTableViewController.h"
+#import "UIImage+ProportionalFill.h"
+#define urlString @"http://beta.json-generator.com/api/json/get/4y6GQQCT"
 
-#define urlString @"http://www.json-generator.com/api/json/get/chtlTsLAzm?indent=2"
 @interface templateTableViewController () {
-    
     mConnection *mConnect;
 }
 
@@ -18,8 +18,6 @@
 
 @implementation templateTableViewController
 @synthesize tableArray;
-
-
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -31,7 +29,7 @@
     [self.refreshControl addTarget:self
                             action:@selector(pulledRefresh)
                   forControlEvents:UIControlEventValueChanged];
-    [self performSelector:@selector(getTableViewData) withObject:nil afterDelay:1.0];
+//    [self performSelector:@selector(getTableViewData) withObject:nil afterDelay:1.0];
     [self getTableViewData];
 }
 
@@ -51,6 +49,7 @@
 
 - (void)getTableViewData {
     
+    NSLog(@"GETTING DATA!");
     
     __block templateTableViewController * weakSelf = self;
     
@@ -64,7 +63,8 @@
                     NSString *username = [[response objectAtIndex:x] objectForKey:@"username"];
                     NSString *firstname = [[response objectAtIndex:x] objectForKey:@"firstname"];
                     NSString *lastname = [[response objectAtIndex:x] objectForKey:@"lastname"];
-                    cellObject *obj = [[cellObject alloc] initWithUserName:username andFirstName:firstname andLastName:lastname];
+                    NSString *imageUrl = [[response objectAtIndex:x] objectForKey:@"picture_large"];
+                    cellObject *obj = [[cellObject alloc] initWithUserName:username andFirstName:firstname andLastName:lastname andImgURL:imageUrl];
                     [tempArr addObject:obj];
                 }
                 weakSelf.tableArray = [NSMutableArray arrayWithArray:tempArr];
@@ -108,9 +108,14 @@
     customCell *cell = (customCell *)[tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     
     
-        cellObject *currObj = [self.tableArray objectAtIndex:indexPath.row];
-        cell.cellLabel.text = currObj.username;
-    
+    cellObject *currObj = [self.tableArray objectAtIndex:indexPath.row];
+    cell.cellLabel.text = currObj.username;
+    cell.subTitle.text = [NSString stringWithFormat:@"%@ %@",currObj.firstName,currObj.lastName];
+
+    // Here we use the new provided sd_setImageWithURL: method to load the web image
+    [cell.imageView sd_setImageWithURL: [NSURL URLWithString:currObj.imageUrl]
+                      placeholderImage:[UIImage imageNamed:@"placeholder-hi.png"]];
+
     return cell;
 }
 

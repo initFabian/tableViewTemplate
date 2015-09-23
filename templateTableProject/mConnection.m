@@ -84,21 +84,13 @@ NSURLSessionDataTask *dataTask;
     return req;
 }
 
-
-
--(void)verifyipAddress:(NSString *)ipAddress
-          withPassword:(NSString *)password
-          withCallBack:(void (^)(bool error, NSMutableArray *response))ipHandler {
-    _ipHandler = [ipHandler copy];
-    NSURLSession *session = [self mySessionWithPassword:password];
-    NSMutableURLRequest *request = [self myRequestWithURL:[NSString stringWithFormat:@"http://%@/injector/status",ipAddress]];
-    
-    [self dataTaskFromSession:session andRequest:request withCallBack:^(bool error, NSMutableArray *response) {
-        _ipHandler(error, response);
-    }];
-}
-
-
+/**
+ *  Gets Data by setting Session with mySession and gets data with DataTaskFromSession:andRequest:withCallBack:
+ *
+ *  @param url String:
+ *
+ *  @return CallBack
+ */
 -(void)getDataWithURL:(NSString *)urlString uponCompletion:(void (^)(bool, NSMutableArray *))handler {
     _dataHandler = [handler copy];
     NSURLSession *sess = [self mySession];
@@ -109,6 +101,14 @@ NSURLSessionDataTask *dataTask;
         _dataHandler(error,response);
     }];
 }
+
+/**
+ *  Gets Data by setting Session with mySession and gets data with DataTaskFromSession:andRequest:withCallBack:
+ *
+ *  @param url String:
+ *
+ *  @return CallBack
+ */
 
 -(void)verifyUserWithUrl:(NSString *)url
             withUsername:(NSString *)username
